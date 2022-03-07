@@ -1,0 +1,2 @@
+anipy_cli
+dmenu
