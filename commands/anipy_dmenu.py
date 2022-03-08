@@ -1,6 +1,6 @@
-6#!/bin/python3
+#!/bin/python3
 
-import os
+from pathlib import Path
 from anipy_cli import misc, history, query, download, url_handler, player, config, cli
 import dmenu
 import typing
@@ -11,6 +11,10 @@ def error(msg: str) -> typing.NoReturn:
     # Tell the user the message
     dmenu.show([], prompt="Error: " + msg)
     exit(1)
+
+def warning(msg: str) -> None:
+    # Tell the user the message
+    dmenu.show([], prompt="Warning: " + msg)
 
 def get_list_of_str_nums(start: int, end: int) -> list[str]:
     """Returns a list of strings of numbers between the start and end.
@@ -64,6 +68,45 @@ def ep_select(entry: misc.entry) -> misc.entry:
     return ep_class.gen_eplink()
     
 
+# Functions for eaiser use in sub-commands
+
+def save_entry(entry: misc.entry) -> None:
+    """Save an entry to the cache file. Used for playing next."""
+    save_path = Path.home() / ".cache" / "anipy_dmenu_ep"
+    try:
+        save_path.parent.mkdir(exist_ok=True)
+    except PermissionError:
+        warning(f"Unable to make the folder the save file should be in (PermissionError when running mkdir on: {str(save_path)})")
+        exit(1)
+
+    save_data: list[str] = [
+            entry.category_url,
+            str(entry.ep)
+            ]
+    try:
+        with save_path.open('w') as save_file:
+            for piece in save_data:
+                save_file.write(piece + '\n')
+    except PermissionError:
+        warning(f"Unable to save episode (PermissionError when writing to: {str(save_path)})")
+        return
+
+def load_entry() -> misc.entry:
+    """Loads an entry from the cache file"""
+    save_path = Path.home() / ".cache" / "anipy_dmenu_ep"
+    
+    try:
+        with save_path.open('r') as save_file:
+            save_data = save_file.read()
+    except PermissionError:
+        warning(f"Unable to read episode (PermissionError when reading: {str(save_path)})")
+        exit(1)
+
+    if save_data == "": error("Failed to load entry (got nothing from reading save_file in load_entry")
+    # TODO: Fix this later
+    data = save_data.split('\n')
+    return misc.entry(category_url=data[0], ep=int(data[1]))
+
 def main() -> None:
     entry: misc.entry = misc.entry()
 
@@ -82,6 +125,8 @@ def main() -> None:
     url_class = url_handler.videourl(entry, None)
     url_class.stream_url()
     entry = url_class.get_entry()
+
+    save_entry(entry)
 
     # Play it
     sub_proc = player.mpv(entry)
