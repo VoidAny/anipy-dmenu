@@ -1,4 +1,4 @@
-#!/bin/python3
+6#!/bin/python3
 
 import os
 from anipy_cli import misc, history, query, download, url_handler, player, config, cli
@@ -69,6 +69,7 @@ def main() -> None:
 
     # Get the user's query
     user_query = dmenu.show(items=[], prompt="Enter anime query: ")
+    if user_query == None: exit(0)
     gogo_query = query.query(user_query, entry)
 
     # Get the presise show 
