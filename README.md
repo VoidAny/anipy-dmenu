@@ -47,3 +47,16 @@ Just run
 as root.
 
 
+Usage
+=====
+
+After install, anipy-dmenu can be used though dmenu itself, assuming you are using dwm.
+
+Most command are prefixed with `apd`, which stands for AniPy-Dmenu.
+
+Available Commands
+------------------
+
+`anipy-dmenu` - This lets you use dmenu to select an episode to watch.
+
+`apd-next` - This lets you watch the episode after the one previously watched.
