@@ -130,9 +130,6 @@ def main() -> None:
 
     # Play it
     sub_proc = player.mpv(entry)
-    menu = cli.menu(entry, [], sub_proc, entry.quality)
-    
-    menu.start_ep()
 
 
 if __name__ == '__main__':
