@@ -25,6 +25,7 @@ install:
 	cp commands/apd-next.py "$(PREFIX)/bin/apd-next"
 
 uninstall:
+	$(RM) "$(PREFIX)/bin/anipy_dmenu.py"
 	$(RM) "$(PREFIX)/bin/anipy-dmenu"
 	$(RM) "$(PREFIX)/bin/apd-next"
 
