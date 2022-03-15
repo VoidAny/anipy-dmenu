@@ -1,10 +1,7 @@
-#!/bin/python3
-
 from pathlib import Path
 from anipy_cli import misc, history, query, download, url_handler, player, config, cli
 import dmenu
 import typing
-import os
 
 # Other functions
 
@@ -123,30 +120,5 @@ def play_entry(entry: misc.entry) -> None:
 
     return
 
-def main() -> None:
-    entry: misc.entry = misc.entry()
-
-    # Get the user's query
-    user_query = dmenu.show(items=[], prompt="Enter anime query: ")
-    if user_query == None: exit(0)
-    gogo_query = query.query(user_query, entry)
-
-    # Get the presise show 
-    entry.category_url = config.gogoanime_url + show_select(gogo_query.get_links())
-
-    # Get the ep and ep_url
-    entry = ep_select(entry)
-
-    # Get the stream_url 
-    url_class = url_handler.videourl(entry, None)
-    url_class.stream_url()
-    entry = url_class.get_entry()
-
-    save_entry(entry)
-
-    # Play it
-    play_entry(entry)
-
-
 if __name__ == '__main__':
-    main()
+    error("This file is not intented to be run (__name__ == '__main__' in anipy_dmenu.py)")
