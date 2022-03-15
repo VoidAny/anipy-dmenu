@@ -11,8 +11,10 @@ gentoo-dependencies:
 
 install: 
 	mkdir -p "$(PREFIX)/bin"
-	cp commands/anipy_dmenu.py "$(PREFIX)/bin/anipy_dmenu.py"
-	cp commands/anipy_dmenu.py "$(PREFIX)/bin/anipy-dmenu"
+	# Main library
+	cp anipy_dmenu.py "$(PREFIX)/bin/anipy_dmenu.py"
+	# The commands that can be run
+	cp commands/anipy-dmenu.py "$(PREFIX)/bin/anipy-dmenu"
 	cp commands/apd-next.py "$(PREFIX)/bin/apd-next"
 
 uninstall:
