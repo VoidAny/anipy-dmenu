@@ -11,7 +11,15 @@ It uses [anipy-cli](https://github.com/sdaqo/anipy-cli) to interact with gogoani
 Installing - Dependancies
 ========================
 
-You will need to have dmenu installed. For the other dependencies, install them via the makefile as root. 
+You will need to have dmenu installed. If you don't, you can install it via the makefile. For the other dependencies, install them via the makefile as root. 
+
+### Dmenu
+
+To install dmenu, you have to build it from source. If you already have dmenu installed on your system, you can skip this step. If you do not have it installed, you can install Luke Smith's version by running command below as root:
+
+`make dmenu`
+
+In order to change any of the settings in dmenu, you will have to edit `/usr/local/src/dmenu/config.h` and then recompile and reinstall it with `sudo make clean install`.
 
 ### Arch/Artix
 

@@ -3,6 +3,13 @@ PREFIX := /usr/local
 dependencies:
 	python3 -m pip install -r requirements.txt
 
+dmenu:
+	mkdir -p "$(PREFIX)/src"
+	cd "$(PREFIX)/src"
+	git clone https://github.com/Lukesmithxyz/dmenu
+	cd "$(PREFIX)/src/dmenu"
+	make install
+
 arch-dependencies:
 	pacman -S python mpv
 
@@ -23,4 +30,4 @@ uninstall:
 
 all: dependencies install
 
-.PHONY: all dependencies install uninstall
+.PHONY: all dependencies install uninstall arch-dependencies gentoo-dependencies dmenu
