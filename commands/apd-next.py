@@ -15,10 +15,7 @@ def main() -> None:
     anipy_dmenu.save_entry(entry)
 
     # Play it
-    sub_proc = anipy_dmenu.player.mpv(entry)
-    menu = anipy_dmenu.cli.menu(entry, [], sub_proc, None)
-    
-    menu.start_ep()
+    anipy_dmenu.play_entry(entry)
 
 
 if __name__ == "__main__": main()

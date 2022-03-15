@@ -4,6 +4,7 @@ from pathlib import Path
 from anipy_cli import misc, history, query, download, url_handler, player, config, cli
 import dmenu
 import typing
+import os
 
 # Other functions
 
@@ -107,6 +108,21 @@ def load_entry() -> misc.entry:
     data = save_data.split('\n')
     return misc.entry(category_url=data[0], ep=int(data[1]))
 
+def play_entry(entry: misc.entry) -> None:
+    """Plays the given entry and does not return until mpv is quit
+
+    Requires the show_name, ep, embed_url, and stream_url fields to be filled
+
+    This function is a wrapper of anipy-cli's player.mpv function, but just works better for this project
+    """
+
+    subproc = player.mpv(entry)
+
+    # .communicate pretty much just waits until the subproc exits
+    subproc.communicate()
+
+    return
+
 def main() -> None:
     entry: misc.entry = misc.entry()
 
@@ -129,10 +145,7 @@ def main() -> None:
     save_entry(entry)
 
     # Play it
-    sub_proc = player.mpv(entry)
-    menu = cli.menu(entry, [], sub_proc, entry.quality)
-    
-    menu.start_ep()
+    play_entry(entry)
 
 
 if __name__ == '__main__':
