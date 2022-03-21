@@ -68,3 +68,8 @@ Available Commands
 `anipy-dmenu` - This lets you use dmenu to select an episode to watch.
 
 `apd-next` - This lets you watch the episode after the one previously watched.
+
+`apd-replay` - This replays the last played episode.
+
+`apd-previous` - This plays the episode before the last played episode.
+

@@ -23,11 +23,15 @@ install:
 	# The commands that can be run
 	cp commands/anipy-dmenu.py "$(PREFIX)/bin/anipy-dmenu"
 	cp commands/apd-next.py "$(PREFIX)/bin/apd-next"
+	cp commands/apd-replay.py "$(PREFIX)/bin/apd-replay"
+	cp commands/apd-previous.py "$(PREFIX)/bin/apd-previous"
 
 uninstall:
 	$(RM) "$(PREFIX)/bin/anipy_dmenu.py"
 	$(RM) "$(PREFIX)/bin/anipy-dmenu"
 	$(RM) "$(PREFIX)/bin/apd-next"
+	$(RM) "$(PREFIX)/bin/apd-replay"
+	$(RM) "$(PREFIX)/bin/apd-previous"
 
 all: dependencies install
 
