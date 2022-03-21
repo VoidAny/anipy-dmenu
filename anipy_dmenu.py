@@ -120,5 +120,20 @@ def play_entry(entry: misc.entry) -> None:
 
     return
 
+def play_from_cached_entry_data(entry: misc.entry) -> None:
+    """Note: This function is subject to change, it will be deprecated after this project swiches to using anipy-cli's history functions
+
+    This function plays an entry that only has the category_url and ep filled in. It was made to be used in the next, previous, and replay commands to reduce reused code.
+    """
+
+    entry = url_handler.epHandler(entry).gen_eplink()
+
+    url_class = url_handler.videourl(entry, None)
+    url_class.stream_url()
+    entry = url_class.get_entry()
+
+    # Play it
+    play_entry(entry)
+
 if __name__ == '__main__':
     error("This file is not intented to be run (__name__ == '__main__' in anipy_dmenu.py)")
