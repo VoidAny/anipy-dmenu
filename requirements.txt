@@ -1,2 +1,2 @@
-anipy_cli
+anipy_cli>=2.2.5
 dmenu

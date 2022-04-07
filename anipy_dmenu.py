@@ -1,5 +1,5 @@
 from pathlib import Path
-from anipy_cli import misc, history, query, download, url_handler, player, config, cli
+import anipy_cli
 import dmenu
 import typing
 
@@ -43,12 +43,12 @@ def show_select(links_and_names: tuple[list[str], list[str]] | typing.Literal[0]
     return links[location]
 
 
-def ep_select(entry: misc.entry) -> misc.entry:
+def ep_select(entry: anipy_cli.entry) -> anipy_cli.entry:
     """Lets the user pick which episode number they want
     Returns an entry with .ep filled 
     Requires .catagory_url to be filled"""
     
-    ep_class = url_handler.epHandler(entry)
+    ep_class = anipy_cli.epHandler(entry)
     ep_class.get_latest()
 
     # Get options for avalible episodes
@@ -68,7 +68,7 @@ def ep_select(entry: misc.entry) -> misc.entry:
 
 # Functions for eaiser use in sub-commands
 
-def save_entry(entry: misc.entry) -> None:
+def save_entry(entry: anipy_cli.entry) -> None:
     """Save an entry to the cache file. Used for playing next."""
     save_path = Path.home() / ".cache" / "anipy_dmenu_ep"
     try:
@@ -89,7 +89,7 @@ def save_entry(entry: misc.entry) -> None:
         warning(f"Unable to save episode (PermissionError when writing to: {str(save_path)})")
         return
 
-def load_entry() -> misc.entry:
+def load_entry() -> anipy_cli.entry:
     """Loads an entry from the cache file"""
     save_path = Path.home() / ".cache" / "anipy_dmenu_ep"
     
@@ -103,9 +103,9 @@ def load_entry() -> misc.entry:
     if save_data == "": error("Failed to load entry (got nothing from reading save_file in load_entry")
     # TODO: Fix this later
     data = save_data.split('\n')
-    return misc.entry(category_url=data[0], ep=int(data[1]))
+    return anipy_cli.entry(category_url=data[0], ep=int(data[1]))
 
-def play_entry(entry: misc.entry) -> None:
+def play_entry(entry: anipy_cli.entry) -> None:
     """Plays the given entry and does not return until mpv is quit
 
     Requires the show_name, ep, embed_url, and stream_url fields to be filled
@@ -113,22 +113,22 @@ def play_entry(entry: misc.entry) -> None:
     This function is a wrapper of anipy-cli's player.mpv function, but just works better for this project
     """
 
-    subproc = player.mpv(entry)
+    subproc = anipy_cli.mpv(entry)
 
     # .communicate pretty much just waits until the subproc exits
     subproc.communicate()
 
     return
 
-def play_from_cached_entry_data(entry: misc.entry) -> None:
+def play_from_cached_entry_data(entry: anipy_cli.entry) -> None:
     """Note: This function is subject to change, it will be deprecated after this project swiches to using anipy-cli's history functions
 
     This function plays an entry that only has the category_url and ep filled in. It was made to be used in the next, previous, and replay commands to reduce reused code.
     """
 
-    entry = url_handler.epHandler(entry).gen_eplink()
+    entry = anipy_cli.epHandler(entry).gen_eplink()
 
-    url_class = url_handler.videourl(entry, None)
+    url_class = anipy_cli.videourl(entry, None)
     url_class.stream_url()
     entry = url_class.get_entry()
 
