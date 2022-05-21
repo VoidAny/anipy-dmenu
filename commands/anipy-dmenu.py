@@ -10,7 +10,7 @@ def main() -> None:
     gogo_query = anipy_dmenu.anipy_cli.query(user_query, entry)
 
     # Get the presise show 
-    entry.category_url = anipy_dmenu.anipy_cli.config.gogoanime_url + anipy_dmenu.show_select(gogo_query.get_links())
+    entry.category_url = anipy_dmenu.anipy_cli.config.config.gogoanime_url + anipy_dmenu.show_select(gogo_query.get_links())
 
     # Get the ep and ep_url
     entry = anipy_dmenu.ep_select(entry)
